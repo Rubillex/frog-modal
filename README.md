@@ -138,6 +138,36 @@ If you need to customize the modal, you have the option to change the value of s
 
 ```
 
+## API Reference
+
+useFrogModal has some options that you can pass as a parameter of composable.
+
+### closeOnOverlayClick
+
+Enables/disables closing the modal by clicking on the overlay
+
+Type: boolean
+
+Default: true
+
+Example:
+
+```typescript
+const [setModal] = useFrogModal({ closeOnOverlayClick: false }) // Disables closing modal by clicking on the overlay
+```
+
+### closeOnEsc
+
+Enables/disables closing the modal by press Esc button
+
+Type: boolean
+
+Default: true
+
+```typescript
+const [setModal] = useFrogModal({ closeOnEsc: false }) // Disables closing modal by pressing Esc button
+```
+
 <!-- Badges -->
 [npm-version-src]: https://img.shields.io/npm/v/my-module/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
 [npm-version-href]: https://npmjs.com/package/frog-modal
