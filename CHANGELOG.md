@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.0.12
+
+[compare changes](https://github.com/Rubillex/frog-modal/compare/main%40%7B1day%7D...main)
 
 ## v1.0.12
 
@@ -46,4 +49,3 @@
 [compare changes](https://github.com/froggyxyz/frog-modal/compare/v1.0.1...v1.0.2)
 
 ## v1.0.1
-
