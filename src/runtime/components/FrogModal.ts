@@ -13,7 +13,7 @@ export const FrogModal = {
         config: IFrogModalConfig;
       }[]
     >("frog-modal", () => []);
-    const [, closeModal] = useFrogModal();
+    const { closeModal } = useFrogModal();
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.keyCode === 27 && modal.value[0]?.config.closeOnEsc) closeModal();

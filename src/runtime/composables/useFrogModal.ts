@@ -9,11 +9,11 @@ const baseConfig = {
 
 export const useFrogModal = <T>(
   config?: IFrogModalConfig
-): [
-  (comp: DefineComponent | {}, opts?: T) => void,
-  () => void,
-  Ref<boolean>
-] => {
+): {
+  setModal: (comp: DefineComponent | {}, opts?: T) => void;
+  closeModal: () => void;
+  isOpen: Ref<boolean>;
+} => {
   const modal = useState<
     {
       component: DefineComponent | {};
@@ -38,5 +38,5 @@ export const useFrogModal = <T>(
     }
   );
 
-  return [setter, clearer, isOpen];
+  return { setModal: setter, closeModal: clearer, isOpen };
 };

@@ -17,8 +17,8 @@ Find and replace all on all files (CMD+SHIFT+F):
 This module is designed to simplify working with your custom modals.
 
 - [✨ &nbsp;Release Notes](/CHANGELOG.md)
-<!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/my-module?file=playground%2Fapp.vue) -->
-<!-- - [📖 &nbsp;Documentation](https://example.com) -->
+  <!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/my-module?file=playground%2Fapp.vue) -->
+  <!-- - [📖 &nbsp;Documentation](https://example.com) -->
 
 ## Quick Setup
 
@@ -39,10 +39,8 @@ npm install frog-modal
 
 ```js
 export default defineNuxtConfig({
-  modules: [
-    'frog-modal'
-  ]
-})
+  modules: ["frog-modal"],
+});
 ```
 
 That's it! You can now use frog-modal in your Nuxt app ✨
@@ -53,11 +51,11 @@ Add FrogModal component in app.vue file.
 
 ```vue
 <template>
-    <div>
-        <FrogModal />
-        <!--<NuxtPage /> maybe :) -->
-        <!-- your code... -->
-    </div>
+  <div>
+    <FrogModal />
+    <!--<NuxtPage /> maybe :) -->
+    <!-- your code... -->
+  </div>
 </template>
 ```
 
@@ -65,14 +63,14 @@ Then use composable useFrogModal. And just import your modal component and pass 
 
 ```vue
 <template>
-    <button @click="setModal(MyModal)">Open modal</button>
-    <p>Is open state for frog-modal true/false: {{ isOpen }}</p>
+  <button @click="setModal(MyModal)">Open modal</button>
+  <p>Is open state for frog-modal true/false: {{ isOpen }}</p>
 </template>
 
 <script setup>
-import MyModal from '~/components/MyModal.vue';
-    
-const [setModal, closeModal, isOpen] = useFrogModal();
+import MyModal from "~/components/MyModal.vue";
+
+const { setModal, closeModal, isOpen } = useFrogModal();
 // You can specify any other names instead of setModal and closeModal
 </script>
 ```
@@ -83,22 +81,25 @@ If you only need a function to close.
 
 ```vue
 <template>
-    <button @click="closeModal">Close modal</button>
+  <button @click="closeModal">Close modal</button>
 </template>
 
 <script setup>
-const [, closeModal] = useFrogModal();
+const { closeModal } = useFrogModal();
 </script>
 ```
 
 If you need to pass the props and emits to modal component, you can pass it to second _(optional)_ parameter of setter function.
 
 ```js
-const handleClick = () => console.log('Custom emit works');
+const handleClick = () => console.log("Custom emit works");
 
-const [setModal] = useFrogModal();
+const { setModal } = useFrogModal();
 
-setModal(MyModal, { someProp: "Hello, it's frog-modal", onCustomEmit: handleClick });
+setModal(MyModal, {
+  someProp: "Hello, it's frog-modal",
+  onCustomEmit: handleClick,
+});
 // To set emits, you need pass them in camelCase, which starts with "on".
 
 // Some examples
@@ -110,9 +111,9 @@ setModal(MyModal, { someProp: "Hello, it's frog-modal", onCustomEmit: handleClic
 Also, you can add type definition of props and emits.
 
 ```ts
-const [setModal] = useFrogModal<{ text: string }>();
+const { setModal } = useFrogModal<{ text: string }>();
 
-setModal(MyModal, { text: 'Hello' });
+setModal(MyModal, { text: "Hello" });
 ```
 
 If you need to customize the modal, you have the option to change the value of some variables, or access the classes directly.
@@ -121,21 +122,28 @@ If you need to customize the modal, you have the option to change the value of s
 /* By variables */
 
 :root {
-    --frog-modal-transition: visibility 0.2s, opacity 0.2s;
-    --frog-modal-overlay-opacity: 0.5;
-    --frog-modal-overlay-background: #0e151e;
+  --frog-modal-transition: visibility 0.2s, opacity 0.2s;
+  --frog-modal-overlay-opacity: 0.5;
+  --frog-modal-overlay-background: #0e151e;
 }
 
 /* By classes */
 
-.frog-modal { /* ... */ }
+.frog-modal {
+  /* ... */
+}
 
-.frog-modal.hide { /* ... */ }
+.frog-modal.hide {
+  /* ... */
+}
 
-.frog-modal__content { /* ... */ }
+.frog-modal__content {
+  /* ... */
+}
 
-.frog-modal__overlay { /* ... */ }
-
+.frog-modal__overlay {
+  /* ... */
+}
 ```
 
 ## API Reference
@@ -153,7 +161,7 @@ Default: true
 Example:
 
 ```typescript
-const [setModal] = useFrogModal({ closeOnOverlayClick: false }) // Disables closing modal by clicking on the overlay
+const { setModal } = useFrogModal({ closeOnOverlayClick: false }); // Disables closing modal by clicking on the overlay
 ```
 
 ### closeOnEsc
@@ -165,18 +173,16 @@ Type: boolean
 Default: true
 
 ```typescript
-const [setModal] = useFrogModal({ closeOnEsc: false }) // Disables closing modal by pressing Esc button
+const { setModal } = useFrogModal({ closeOnEsc: false }); // Disables closing modal by pressing Esc button
 ```
 
 <!-- Badges -->
+
 [npm-version-src]: https://img.shields.io/npm/v/my-module/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
 [npm-version-href]: https://npmjs.com/package/frog-modal
-
 [npm-downloads-src]: https://img.shields.io/npm/dm/my-module.svg?style=flat&colorA=18181B&colorB=28CF8D
 [npm-downloads-href]: https://npmjs.com/package/frog-modal
-
 [license-src]: https://img.shields.io/npm/l/my-module.svg?style=flat&colorA=18181B&colorB=28CF8D
 [license-href]: https://npmjs.com/package/frog-modal
-
 [nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
 [nuxt-href]: https://nuxt.com
