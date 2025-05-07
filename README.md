@@ -182,11 +182,11 @@ const { setModal } = useFrogModal({ closeOnEsc: false }); // Disables closing mo
 
 <!-- Badges -->
 
-[npm-version-src]: https://img.shields.io/npm/v/my-module/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
-[npm-version-href]: https://npmjs.com/package/frog-modal
-[npm-downloads-src]: https://img.shields.io/npm/dm/my-module.svg?style=flat&colorA=18181B&colorB=28CF8D
-[npm-downloads-href]: https://npmjs.com/package/frog-modal
-[license-src]: https://img.shields.io/npm/l/my-module.svg?style=flat&colorA=18181B&colorB=28CF8D
-[license-href]: https://npmjs.com/package/frog-modal
+[npm-version-src]: https://img.shields.io/npm/v/rubillex_frog-modal/latest.svg?style=flat&colorA=020420&colorB=00DC82
+[npm-version-href]: https://npmjs.com/package/rubillex_frog-modal
+[npm-downloads-src]: https://img.shields.io/npm/dm/rubillex_frog-modal.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-downloads-href]: https://npmjs.com/package/rubillex_frog-modal
+[license-src]: https://img.shields.io/npm/l/rubillex_frog-modal.svg?style=flat&colorA=18181B&colorB=28CF8D
+[license-href]: https://npmjs.com/package/rubillex_frog-modal
 [nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
 [nuxt-href]: https://nuxt.com
