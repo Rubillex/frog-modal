@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.2.0
+
+[compare changes](https://github.com/Rubillex/frog-modal/compare/v1.1.1...v.1.2.0)
+
 ## v1.0.12
 
 [compare changes](https://github.com/Rubillex/frog-modal/compare/main%40%7B1day%7D...main)
