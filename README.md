@@ -7,6 +7,10 @@ Find and replace all on all files (CMD+SHIFT+F):
 - Description: My new Nuxt module
 -->
 
+## Оригинальный репозиторий
+
+Этот проект является форком froggyxyz/frog-modal
+
 # frog-modal
 
 [![npm version][npm-version-src]][npm-version-href]
