@@ -1,6 +1,6 @@
 {
   "name": "rubillex_frog-modal",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Modal helper for Nuxt 3 (forked from https://github.com/froggyxyz/frog-modal)",
   "repository": "Rubillex/frog-modal",
   "license": "MIT",

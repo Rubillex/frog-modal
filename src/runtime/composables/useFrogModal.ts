@@ -1,4 +1,4 @@
-import { DefineComponent, Ref } from "vue";
+import { DefineComponent } from "vue";
 import { markRaw, ref, useState, watch } from "#imports";
 import { IFrogModalConfig } from "../types";
 
@@ -7,28 +7,33 @@ const baseConfig = {
   closeOnEsc: true,
 };
 
-export const useFrogModal = <T>(
-  config?: IFrogModalConfig
-): {
-  setModal: (comp: DefineComponent | {}, opts?: T) => void;
-  closeModal: () => void;
-  isOpen: Ref<boolean>;
-} => {
+// Утилита для преобразования эмитов в onXxx-колбэки
+export type EmitsToOn<T> = {
+  [K in keyof T as K extends string ? `on${Capitalize<K>}` : never]: (
+    ...args: T[K] extends any[] ? T[K] : never
+  ) => void;
+};
+
+export function useFrogModal(config?: IFrogModalConfig) {
   const modal = useState<
     {
       component: DefineComponent | {};
-      options: T | {};
+      options: any;
       config: IFrogModalConfig;
     }[]
   >("frog-modal", () => []);
   const isOpen = ref<boolean>(false);
 
-  const setter = (_cmp: DefineComponent | {}, _opts: T | {} = {}) =>
+  function setModal<Props = {}, Emits extends Record<string, any[]> = {}>(
+    comp: DefineComponent | {},
+    opts?: Props & EmitsToOn<Emits>
+  ) {
     modal.value?.push({
-      component: markRaw(_cmp),
-      options: _opts,
+      component: markRaw(comp),
+      options: opts ?? {},
       config: { ...baseConfig, ...config },
     });
+  }
   const clearer = () => modal.value.pop();
 
   watch(
@@ -38,5 +43,5 @@ export const useFrogModal = <T>(
     }
   );
 
-  return { setModal: setter, closeModal: clearer, isOpen };
-};
+  return { setModal, closeModal: clearer, isOpen };
+}

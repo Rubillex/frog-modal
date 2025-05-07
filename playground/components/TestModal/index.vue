@@ -2,17 +2,20 @@
   <div class="modal">
     <p>Hello! It's awesome frog-modal</p>
     <p>Custom text from prop: {{ text }}</p>
-    <button @click="emit('customEmit')">Click for custom emit</button>
+    <button @click="emit('customEmit', 'Custom message')">
+      Click for custom emit
+    </button>
     <button @click="setModal(SecondModal)">Open Second modal</button>
   </div>
 </template>
 
 <script lang="ts" setup>
 import SecondModal from "~/components/SecondModal.vue";
-import { useFrogModal } from "../src/runtime/composables/useFrogModal";
+import { useFrogModal } from "../../../src/runtime/composables/useFrogModal";
+import type { TestModalProps, TestModalEmits } from "./test-modal.types";
 
-defineProps<{ text: string }>();
-const emit = defineEmits(["customEmit"]);
+defineProps<TestModalProps>();
+const emit = defineEmits<TestModalEmits>();
 
 const { setModal } = useFrogModal();
 </script>

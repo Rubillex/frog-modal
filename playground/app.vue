@@ -1,13 +1,7 @@
 <template>
   <div>
     <FrogModal />
-    <button
-      @click="
-        setModal(TestModal, { text: 'Hello World!', onCustomEmit: handleClick })
-      "
-    >
-      Open modal
-    </button>
+    <button @click="openModal()">Open modal</button>
     <span>isOpen: {{ isOpen }}</span>
   </div>
 </template>
@@ -15,12 +9,23 @@
 <script lang="ts" setup>
 import { FrogModal } from "../src/runtime/components/FrogModal";
 import { useFrogModal } from "../src/runtime/composables/useFrogModal";
-import TestModal from "~/components/TestModal.vue";
+import TestModal from "~/components/TestModal/index.vue";
+import type {
+  TestModalEmits,
+  TestModalProps,
+} from "./components/TestModal/test-modal.types";
 
 const { setModal, isOpen } = useFrogModal();
 
-const handleClick = () => {
-  alert("Custom emit works!");
+const handleClick = (message: string) => {
+  alert(message);
+};
+
+const openModal = () => {
+  setModal<TestModalProps, TestModalEmits>(TestModal, {
+    text: "asd",
+    onCustomEmit: handleClick,
+  });
 };
 </script>
 

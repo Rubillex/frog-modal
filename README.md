@@ -63,63 +63,6 @@ Add FrogModal component in app.vue file.
 </template>
 ```
 
-Then use composable useFrogModal. And just import your modal component and pass it to the setter function.
-
-```vue
-<template>
-  <button @click="setModal(MyModal)">Open modal</button>
-  <p>Is open state for frog-modal true/false: {{ isOpen }}</p>
-</template>
-
-<script setup>
-import MyModal from "~/components/MyModal.vue";
-
-const { setModal, closeModal, isOpen } = useFrogModal();
-// You can specify any other names instead of setModal and closeModal
-</script>
-```
-
-useFrogModal returns two functions and boolean state: a function to set the modal window, a function to clear it and isOpen state
-
-If you only need a function to close.
-
-```vue
-<template>
-  <button @click="closeModal">Close modal</button>
-</template>
-
-<script setup>
-const { closeModal } = useFrogModal();
-</script>
-```
-
-If you need to pass the props and emits to modal component, you can pass it to second _(optional)_ parameter of setter function.
-
-```js
-const handleClick = () => console.log("Custom emit works");
-
-const { setModal } = useFrogModal();
-
-setModal(MyModal, {
-  someProp: "Hello, it's frog-modal",
-  onCustomEmit: handleClick,
-});
-// To set emits, you need pass them in camelCase, which starts with "on".
-
-// Some examples
-// @submit => onSubmit
-// @click => onClick
-// @customEvent => onCustomEvent
-```
-
-Also, you can add type definition of props and emits.
-
-```ts
-const { setModal } = useFrogModal<{ text: string }>();
-
-setModal(MyModal, { text: "Hello" });
-```
-
 If you need to customize the modal, you have the option to change the value of some variables, or access the classes directly.
 
 ```css
@@ -149,6 +92,38 @@ If you need to customize the modal, you have the option to change the value of s
   /* ... */
 }
 ```
+
+## Usage with Strict Typing
+
+### 1. Basic usage with strict prop and emit typing
+
+```ts
+import { useFrogModal } from "frog-modal";
+import TestModal from "~/components/TestModal/index.vue";
+import type {
+  TestModalProps,
+  TestModalEmits,
+} from "./components/TestModal/test-modal.types";
+
+const { setModal, closeModal, isOpen } = useFrogModal();
+
+const handleClick = (message: string) => alert(message);
+
+setModal<TestModalProps, TestModalEmits>(TestModal, {
+  text: "Hello!",
+  onCustomEmit: handleClick,
+});
+```
+
+- The first generic is the props type (required).
+- The second generic is the emits type (optional, defaults to `{}`).
+- All event handlers (onXxx) are required if present in the emits type.
+
+### 2. Advantages
+
+- Strict prop typing for all your modals
+- Optional strict event typing for all or some event handlers
+- TypeScript errors are clear and easy to understand
 
 ## API Reference
 
