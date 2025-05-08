@@ -120,7 +120,7 @@ closeModal();
 clearModals();
 ```
 
-- The first generic is the props type (required).
+- The first generic is the props type (optional, defaults to `{}`).
 - The second generic is the emits type (optional, defaults to `{}`).
 - All event handlers (onXxx) are required if present in the emits type.
 - Use `closeModal()` to close the last opened modal.
