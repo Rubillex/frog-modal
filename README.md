@@ -98,7 +98,6 @@ If you need to customize the modal, you have the option to change the value of s
 ### 1. Basic usage with strict prop and emit typing
 
 ```ts
-import { useFrogModal } from "frog-modal";
 import TestModal from "~/components/TestModal/index.vue";
 import type {
   TestModalProps,
