@@ -105,7 +105,7 @@ import type {
   TestModalEmits,
 } from "./components/TestModal/test-modal.types";
 
-const { setModal, closeModal, isOpen } = useFrogModal();
+const { setModal, closeModal, clearModals, isOpen } = useFrogModal();
 
 const handleClick = (message: string) => alert(message);
 
@@ -113,11 +113,19 @@ setModal<TestModalProps, TestModalEmits>(TestModal, {
   text: "Hello!",
   onCustomEmit: handleClick,
 });
+
+// To close the last opened modal:
+closeModal();
+
+// To close all open modals at once:
+clearModals();
 ```
 
 - The first generic is the props type (required).
 - The second generic is the emits type (optional, defaults to `{}`).
 - All event handlers (onXxx) are required if present in the emits type.
+- Use `closeModal()` to close the last opened modal.
+- Use `clearModals()` to close all open modals at once.
 
 ### 2. Advantages
 

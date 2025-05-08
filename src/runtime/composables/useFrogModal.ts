@@ -1,6 +1,6 @@
 import { DefineComponent } from "vue";
 import { markRaw, ref, useState, watch } from "#imports";
-import { IFrogModalConfig } from "../types";
+import { IFrogModalConfig, modal } from "../types";
 
 const baseConfig = {
   closeOnOverlayClick: true,
@@ -15,13 +15,7 @@ export type EmitsToOn<T> = {
 };
 
 export function useFrogModal(config?: IFrogModalConfig) {
-  const modal = useState<
-    {
-      component: DefineComponent | {};
-      options: any;
-      config: IFrogModalConfig;
-    }[]
-  >("frog-modal", () => []);
+  const modal = useState<modal[]>("frog-modals", () => []);
   const isOpen = ref<boolean>(false);
 
   function setModal<Props = {}, Emits extends Record<string, any[]> = {}>(
@@ -34,7 +28,14 @@ export function useFrogModal(config?: IFrogModalConfig) {
       config: { ...baseConfig, ...config },
     });
   }
-  const clearer = () => modal.value.pop();
+
+  function closeModal() {
+    modal.value.pop();
+  }
+
+  function clearModals() {
+    modal.value = [];
+  }
 
   watch(
     () => modal.value.length,
@@ -43,5 +44,5 @@ export function useFrogModal(config?: IFrogModalConfig) {
     }
   );
 
-  return { setModal, closeModal: clearer, isOpen };
+  return { setModal, closeModal, clearModals, isOpen };
 }
