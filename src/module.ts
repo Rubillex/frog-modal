@@ -49,6 +49,14 @@ export default defineNuxtModule<ModuleOptions>({
       from: resolver.resolve("runtime/composables/useFrogModal"),
     });
 
+    addImports({
+      name: "FrogModalWrapperPosition",
+      as: "FrogModalWrapperPosition",
+      from: resolver.resolve(
+        "runtime/components/FrogModalWrapper/wrapper.types"
+      ),
+    });
+
     nuxt.hook("imports:dirs", (dirs) => {
       dirs.push(resolver.resolve(runtimeDir), "composables");
       dirs.push(resolver.resolve(runtimeDir), "components");

@@ -143,14 +143,43 @@ const { setModal } = useFrogModal();
 
 ### Available Modal Positions
 
-The modal can be positioned in the following ways:
+The modal can be positioned using the `FrogModalWrapperPosition` enum, which is automatically imported by the module:
 
-- `top` - Modal appears from the top of the screen
-- `bottom` - Modal appears from the bottom of the screen
-- `left` - Modal appears from the left side
-- `right` - Modal appears from the right side
-- `center` - Modal appears in the center of the screen
-- `full` - Modal takes up the full screen
+```typescript
+// FrogModalWrapperPosition is automatically imported
+// No need to import it manually
+
+enum FrogModalWrapperPosition {
+  TOP = "top",
+  BOTTOM = "bottom",
+  LEFT = "left",
+  RIGHT = "right",
+  CENTER = "center",
+  FULL = "full",
+}
+```
+
+Example usage:
+
+```vue
+<template>
+  <FrogModalWrapper
+    :desktop-position="FrogModalWrapperPosition.CENTER"
+    :mobile-position="FrogModalWrapperPosition.BOTTOM"
+  >
+    <!-- Modal content -->
+  </FrogModalWrapper>
+</template>
+```
+
+Available positions:
+
+- `TOP` - Modal appears from the top of the screen
+- `BOTTOM` - Modal appears from the bottom of the screen
+- `LEFT` - Modal appears from the left side
+- `RIGHT` - Modal appears from the right side
+- `CENTER` - Modal appears in the center of the screen
+- `FULL` - Modal takes up the full screen
 
 ### Animation Configuration
 
