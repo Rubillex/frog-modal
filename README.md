@@ -36,13 +36,13 @@ A module for simplifying modal window management in Nuxt.js applications.
 
 ```bash
 # Using pnpm
-pnpm add frog-modal
+pnpm add rubillex_frog-modal
 
 # Using yarn
-yarn add frog-modal
+yarn add rubillex_frog-modal
 
 # Using npm
-npm install frog-modal
+npm install rubillex_frog-modal
 ```
 
 ## Quick Start
