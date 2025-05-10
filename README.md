@@ -267,22 +267,79 @@ Note: The actual animation duration and timing function are controlled by CSS va
 
 ## TypeScript
 
+### Type Definitions
+
+For proper TypeScript support, define your modal's props and emits types in a separate file:
+
+```typescript
+// your-modal.types.ts
+export type YourModalProps = {
+  text: string;
+  // other props...
+};
+
+export type YourModalEmits = {
+  customEmit: [message: string];
+  // other emits...
+};
+```
+
 ### Basic Usage with TypeScript
 
-```ts
-import TestModal from "~/components/TestModal/index.vue";
-import type {
-  TestModalProps,
-  TestModalEmits,
-} from "./components/TestModal/test-modal.types";
+```vue
+<template>
+  <FrogModalWrapper
+    desktop-position="center"
+    mobile-position="bottom"
+    mobile-swipe-to-close
+    class="modal"
+  >
+    <p>{{ text }}</p>
+    <button @click="emit('customEmit', 'Custom message')">
+      Trigger Custom Event
+    </button>
+  </FrogModalWrapper>
+</template>
 
+<script lang="ts" setup>
+import { useFrogModal } from "frog-modal";
+import type { YourModalProps, YourModalEmits } from "./your-modal.types";
+
+// Define props and emits using the types
+defineProps<YourModalProps>();
+const emit = defineEmits<YourModalEmits>();
+
+// Access modal methods if needed
+const { setModal } = useFrogModal();
+</script>
+```
+
+### Opening Typed Modals
+
+When opening a modal, TypeScript will provide type checking for both props and emits:
+
+```typescript
 const { setModal } = useFrogModal();
 
-setModal<TestModalProps, TestModalEmits>(TestModal, {
-  text: "Hello!",
-  onCustomEmit: (message: string) => alert(message),
+// TypeScript will ensure all required props are provided
+setModal<YourModalProps, YourModalEmits>(YourModal, {
+  text: "Hello!", // Required prop
+  onCustomEmit: (message: string) => {
+    // TypeScript knows the exact type of the message parameter
+    console.log(message);
+  },
 });
 ```
+
+### Type Safety Features
+
+- Props type checking ensures all required props are provided
+- Emits type checking ensures event handlers match the defined types
+- TypeScript will show errors if:
+  - Required props are missing
+  - Wrong prop types are provided
+  - Event handlers don't match the defined types
+  - Wrong number of arguments are passed to event handlers
 
 ## API
 
