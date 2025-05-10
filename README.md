@@ -318,8 +318,8 @@ export type YourModalEmits = {
 ```vue
 <template>
   <FrogModalWrapper
-    desktop-position="center"
-    mobile-position="bottom"
+    :desktop-position="FrogModalWrapperPosition.BOTTOM"
+    :mobile-position="FrogModalWrapperPosition.BOTTOM"
     mobile-swipe-to-close
     class="modal"
   >
