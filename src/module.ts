@@ -32,7 +32,7 @@ export default defineNuxtModule<ModuleOptions>({
     addComponent({
       name: options.componentName,
       export: options.componentName,
-      filePath: resolver.resolve("runtime/components/FrogModal"),
+      filePath: resolver.resolve("runtime/components/FrogModal.vue"),
     });
 
     addComponent({
