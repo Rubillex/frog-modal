@@ -15,8 +15,8 @@ export interface ModuleOptions {
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: "frog-modal",
-    configKey: "frog-modal",
+    name: "rubillex_frog-modal",
+    configKey: "rubillex_frog-modal",
   },
   defaults: {
     componentName: "FrogModal",

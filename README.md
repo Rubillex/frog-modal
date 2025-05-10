@@ -47,11 +47,11 @@ npm install rubillex_frog-modal
 
 ## Quick Start
 
-1. Add `frog-modal` to the `modules` section of your `nuxt.config.ts`:
+1. Add `rubillex_frog-modal` to the `modules` section of your `nuxt.config.ts`:
 
 ```js
 export default defineNuxtConfig({
-  modules: ["frog-modal"],
+  modules: ["rubillex_frog-modal"],
 });
 ```
 
