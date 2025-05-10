@@ -31,13 +31,13 @@ export default defineNuxtModule<ModuleOptions>({
 
     addComponent({
       name: options.componentName,
-      export: options.componentName,
+      export: "default",
       filePath: resolver.resolve("runtime/components/FrogModal.vue"),
     });
 
     addComponent({
       name: options.wrapperComponentName,
-      export: options.wrapperComponentName,
+      export: "default",
       filePath: resolver.resolve(
         "runtime/components/FrogModalWrapper/index.vue"
       ),
