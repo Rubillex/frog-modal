@@ -1,7 +1,7 @@
 <template>
   <FrogModalWrapper
-    desktop-position="center"
-    mobile-position="bottom"
+    :desktop-position="FrogModalWrapperPosition.CENTER"
+    :mobile-position="FrogModalWrapperPosition.BOTTOM"
     mobile-swipe-to-close
     class="modal"
   >
@@ -21,7 +21,7 @@
 import SecondModal from "~/components/SecondModal.vue";
 import { useFrogModal } from "../../../src/runtime/composables/useFrogModal";
 import type { TestModalProps, TestModalEmits } from "./test-modal.types";
-
+import { FrogModalWrapperPosition } from "../../../src/runtime/components/FrogModalWrapper/wrapper.types";
 import FrogModalWrapper from "../../../src/runtime/components/FrogModalWrapper/index.vue";
 
 defineProps<TestModalProps>();
