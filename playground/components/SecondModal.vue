@@ -1,8 +1,20 @@
 <template>
-  <div class="modal">
-    <p>Hello! It's second modal</p>
-  </div>
+  <FrogModalWrapper
+    :desktop-position="FrogModalWrapperPosition.CENTER"
+    :mobile-position="FrogModalWrapperPosition.BOTTOM"
+    mobile-swipe-to-close
+    class="modal"
+  >
+    <div class="modal">
+      <p>Hello! It's second modal</p>
+    </div>
+  </FrogModalWrapper>
 </template>
+
+<script setup lang="ts">
+import { FrogModalWrapperPosition } from "../../src/runtime/components/FrogModalWrapper/wrapper.types";
+import FrogModalWrapper from "../../src/runtime/components/FrogModalWrapper/index.vue";
+</script>
 
 <style scoped>
 .modal {

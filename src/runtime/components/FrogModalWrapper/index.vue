@@ -18,25 +18,23 @@
         : undefined
     "
   >
-    <div>
-      <div
-        v-if="
-          isMobile &&
-          mobileSwipeToClose &&
-          mobilePosition === FrogModalWrapperPosition.BOTTOM
-        "
-        @touchstart="handleTouchStart"
-        @touchmove="handleTouchMove"
-        @touchend="handleTouchEnd"
-      >
-        <slot name="header">
-          <div class="frog-modal-wrapper__header">
-            <div class="frog-modal-wrapper__header-close" />
-          </div>
-        </slot>
-      </div>
-      <slot />
+    <div
+      v-if="
+        isMobile &&
+        mobileSwipeToClose &&
+        mobilePosition === FrogModalWrapperPosition.BOTTOM
+      "
+      @touchstart="handleTouchStart"
+      @touchmove="handleTouchMove"
+      @touchend="handleTouchEnd"
+    >
+      <slot name="header">
+        <div class="frog-modal-wrapper__header">
+          <div class="frog-modal-wrapper__header-close" />
+        </div>
+      </slot>
     </div>
+    <slot />
   </div>
 </template>
 
