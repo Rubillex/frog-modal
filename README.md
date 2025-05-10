@@ -135,11 +135,11 @@ const { setModal } = useFrogModal();
 
 ### FrogModalWrapper Props
 
-| Prop               | Type                     | Default                         | Description                                               |
-| ------------------ | ------------------------ | ------------------------------- | --------------------------------------------------------- |
-| desktopPosition    | FrogModalWrapperPosition | FrogModalWrapperPosition.CENTER | Modal position on desktop (see available positions below) |
-| mobilePosition     | FrogModalWrapperPosition | FrogModalWrapperPosition.CENTER | Modal position on mobile (see available positions below)  |
-| mobileSwipeToClose | boolean                  | false                           | Enable swipe-to-close on mobile devices                   |
+| Prop               | Type                     | Default | Description                                               |
+| ------------------ | ------------------------ | ------- | --------------------------------------------------------- |
+| desktopPosition    | FrogModalWrapperPosition | .CENTER | Modal position on desktop (see available positions below) |
+| mobilePosition     | FrogModalWrapperPosition | .CENTER | Modal position on mobile (see available positions below)  |
+| mobileSwipeToClose | boolean                  | false   | Enable swipe-to-close on mobile devices                   |
 
 ### Available Modal Positions
 
