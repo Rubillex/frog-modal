@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import { FrogModal } from "../src/runtime/components/FrogModal";
+import FrogModal from "../src/runtime/components/FrogModal.vue";
 import { useFrogModal } from "../src/runtime/composables/useFrogModal";
 import TestModal from "~/components/TestModal/index.vue";
 import type {
@@ -15,7 +15,7 @@ import type {
   TestModalProps,
 } from "./components/TestModal/test-modal.types";
 
-const { setModal, isOpen } = useFrogModal();
+const { setModal, isOpen, modals } = useFrogModal();
 
 const handleClick = (message: string) => {
   alert(message);

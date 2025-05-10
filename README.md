@@ -18,15 +18,21 @@ Find and replace all on all files (CMD+SHIFT+F):
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
-This module is designed to simplify working with your custom modals.
+A module for simplifying modal window management in Nuxt.js applications.
 
-- [✨ &nbsp;Release Notes](/CHANGELOG.md)
-  <!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/my-module?file=playground%2Fapp.vue) -->
-  <!-- - [📖 &nbsp;Documentation](https://example.com) -->
+## Table of Contents
 
-## Quick Setup
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Usage](#usage)
+- [Custom Modal Component Structure](#custom-modal-component-structure)
+- [Styling](#styling)
+- [TypeScript](#typescript)
+- [API](#api)
+- [Examples](#examples)
+- [License](#license)
 
-1. Add `frog-modal` dependency to your project
+## Installation
 
 ```bash
 # Using pnpm
@@ -39,7 +45,9 @@ yarn add frog-modal
 npm install frog-modal
 ```
 
-2. Add `frog-modal` to the `modules` section of `nuxt.config.ts`
+## Quick Start
+
+1. Add `frog-modal` to the `modules` section of your `nuxt.config.ts`:
 
 ```js
 export default defineNuxtConfig({
@@ -47,55 +55,219 @@ export default defineNuxtConfig({
 });
 ```
 
-That's it! You can now use frog-modal in your Nuxt app ✨
-
-## Usage
-
-Add FrogModal component in app.vue file.
+2. Add the `FrogModal` component to your `app.vue`:
 
 ```vue
 <template>
   <div>
     <FrogModal />
-    <!--<NuxtPage /> maybe :) -->
-    <!-- your code... -->
+    <NuxtPage />
   </div>
 </template>
 ```
 
-If you need to customize the modal, you have the option to change the value of some variables, or access the classes directly.
+## Usage
+
+```typescript
+const { setModal, closeModal, clearModals, isOpen } = useFrogModal();
+
+// Opening a modal window
+setModal(YourModalComponent, {
+  // props
+});
+
+// Closing the last opened modal window
+closeModal();
+
+// Closing all modal windows
+clearModals();
+```
+
+## Custom Modal Component Structure
+
+Your custom modal component should be wrapped with `FrogModalWrapper` component. Here's an example of a basic modal component:
+
+```vue
+<template>
+  <FrogModalWrapper
+    desktop-position="center"
+    mobile-position="bottom"
+    mobile-swipe-to-close
+    class="modal"
+  >
+    <!-- Optional header slot -->
+    <template #header>
+      <div class="modal-header">Your Header</div>
+    </template>
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <p>Your modal content here</p>
+      <button @click="emit('customEmit', 'Some data')">
+        Trigger Custom Event
+      </button>
+    </div>
+  </FrogModalWrapper>
+</template>
+
+<script lang="ts" setup>
+import { useFrogModal } from "frog-modal";
+import type { YourModalProps, YourModalEmits } from "./your-modal.types";
+
+// Define props and emits
+defineProps<YourModalProps>();
+const emit = defineEmits<YourModalEmits>();
+
+// Access modal methods if needed
+const { setModal } = useFrogModal();
+</script>
+
+<style scoped>
+.modal {
+  /* Your modal styles */
+  min-width: 250px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 16px;
+}
+</style>
+```
+
+### FrogModalWrapper Props
+
+| Prop               | Type    | Default | Description                                               |
+| ------------------ | ------- | ------- | --------------------------------------------------------- |
+| desktopPosition    | string  | center  | Modal position on desktop (see available positions below) |
+| mobilePosition     | string  | center  | Modal position on mobile (see available positions below)  |
+| mobileSwipeToClose | boolean | false   | Enable swipe-to-close on mobile devices                   |
+
+### Available Modal Positions
+
+The modal can be positioned in the following ways:
+
+- `top` - Modal appears from the top of the screen
+- `bottom` - Modal appears from the bottom of the screen
+- `left` - Modal appears from the left side
+- `right` - Modal appears from the right side
+- `center` - Modal appears in the center of the screen
+- `full` - Modal takes up the full screen
+
+### Animation Configuration
+
+The timing of modal animations (fade in/out) can be configured through the `useFrogModal` composable:
+
+```typescript
+const { setModal } = useFrogModal({
+  fadeInDelay: 200, // Delay before fade in animation starts (in ms)
+  fadeOutDelay: 200, // Delay before fade out animation starts (in ms)
+});
+```
+
+These parameters can be set globally when initializing the composable, and they will apply to all modals opened using this instance.
+
+Note: The actual animation duration and timing function are controlled by CSS variables `--frog-modal-animation-duration` and `--frog-modal-animation-timing`.
+
+### Component Features
+
+#### Header Slot
+
+The `header` slot is specifically designed for mobile devices when using `mobileSwipeToClose`. It provides a draggable area at the top of the modal that users can swipe down to close the modal. This is particularly useful for bottom-positioned modals on mobile devices.
+
+#### Mobile Swipe to Close
+
+When `mobileSwipeToClose` is enabled:
+
+- On mobile devices, users can swipe down to close the modal
+- The header slot becomes a draggable area
+- This feature is most commonly used with `bottom` position on mobile
+- Provides a native-feeling interaction on touch devices
+
+### Component Structure Guidelines
+
+1. Always wrap your modal content with `FrogModalWrapper`
+2. Use the `header` slot for custom header content, especially when implementing swipe-to-close on mobile
+3. Place your main modal content directly inside the wrapper
+4. Define your props and emits types for TypeScript support
+5. Use the `useFrogModal` composable if you need to open nested modals
+
+## Styling
+
+You can customize the appearance of modal windows in two ways:
+
+### Using CSS Variables
 
 ```css
-/* By variables */
-
 :root {
+  /* Modal overlay */
   --frog-modal-transition: visibility 0.2s, opacity 0.2s;
   --frog-modal-overlay-opacity: 0.5;
   --frog-modal-overlay-background: #0e151e;
-}
 
-/* By classes */
-
-.frog-modal {
-  /* ... */
-}
-
-.frog-modal.hide {
-  /* ... */
-}
-
-.frog-modal__content {
-  /* ... */
-}
-
-.frog-modal__overlay {
-  /* ... */
+  /* Animation timing */
+  --frog-modal-animation-duration: 0.3s;
+  --frog-modal-animation-timing: ease-in-out;
 }
 ```
 
-## Usage with Strict Typing
+These variables control:
 
-### 1. Basic usage with strict prop and emit typing
+- `--frog-modal-animation-duration`: Duration of modal animations (default: 0.3s)
+- `--frog-modal-animation-timing`: Timing function for animations (default: ease-in-out)
+
+### Using CSS Classes
+
+The modal system uses the following class structure:
+
+```css
+/* Main modal container */
+.frog-modal {
+  /* Styles for the visible modal container */
+}
+
+.frog-modal.hide {
+  /* Styles for the hidden modal container */
+}
+
+/* Individual modal entity */
+.frog-modal__entity {
+  /* Styles for each modal instance */
+}
+
+/* Modal overlay */
+.frog-modal__overlay {
+  /* Styles for the backdrop */
+  background-color: var(--frog-modal-overlay-background, #0e151e);
+  opacity: var(--frog-modal-overlay-opacity, 0.5);
+}
+```
+
+The class structure follows this hierarchy:
+
+1. `.frog-modal` - Main container for all modals
+2. `.frog-modal__entity` - Container for each individual modal instance
+3. `.frog-modal__overlay` - Backdrop overlay for each modal
+4. Your custom modal component classes
+
+Each modal instance gets a unique z-index based on its position in the stack, ensuring proper layering of multiple modals.
+
+### Animation Configuration
+
+The timing of modal animations (fade in/out) can be configured through the `useFrogModal` composable:
+
+```typescript
+const { setModal } = useFrogModal({
+  fadeInDelay: 200, // Delay before fade in animation starts (in ms)
+  fadeOutDelay: 200, // Delay before fade out animation starts (in ms)
+});
+```
+
+These parameters can be set globally when initializing the composable, and they will apply to all modals opened using this instance.
+
+Note: The actual animation duration and timing function are controlled by CSS variables `--frog-modal-animation-duration` and `--frog-modal-animation-timing`.
+
+## TypeScript
+
+### Basic Usage with TypeScript
 
 ```ts
 import TestModal from "~/components/TestModal/index.vue";
@@ -104,63 +276,63 @@ import type {
   TestModalEmits,
 } from "./components/TestModal/test-modal.types";
 
-const { setModal, closeModal, clearModals, isOpen } = useFrogModal();
-
-const handleClick = (message: string) => alert(message);
+const { setModal } = useFrogModal();
 
 setModal<TestModalProps, TestModalEmits>(TestModal, {
   text: "Hello!",
-  onCustomEmit: handleClick,
+  onCustomEmit: (message: string) => alert(message),
 });
-
-// To close the last opened modal:
-closeModal();
-
-// To close all open modals at once:
-clearModals();
 ```
 
-- The first generic is the props type (optional, defaults to `{}`).
-- The second generic is the emits type (optional, defaults to `{}`).
-- All event handlers (onXxx) are required if present in the emits type.
-- Use `closeModal()` to close the last opened modal.
-- Use `clearModals()` to close all open modals at once.
+## API
 
-### 2. Advantages
+### useFrogModal
 
-- Strict prop typing for all your modals
-- Optional strict event typing for all or some event handlers
-- TypeScript errors are clear and easy to understand
+#### Parameters
 
-## API Reference
+| Parameter           | Type    | Default | Description                                  |
+| ------------------- | ------- | ------- | -------------------------------------------- |
+| closeOnOverlayClick | boolean | true    | Close modal window when clicking the overlay |
+| closeOnEsc          | boolean | true    | Close modal window when pressing Esc         |
 
-useFrogModal has some options that you can pass as a parameter of composable.
+#### Methods
 
-### closeOnOverlayClick
+| Method      | Description                         |
+| ----------- | ----------------------------------- |
+| setModal    | Opens a modal window                |
+| closeModal  | Closes the last opened modal window |
+| clearModals | Closes all open modal windows       |
+| isOpen      | Modal window state (boolean)        |
 
-Enables/disables closing the modal by clicking on the overlay
+## Examples
 
-Type: boolean
-
-Default: true
-
-Example:
+### Basic Usage
 
 ```typescript
-const { setModal } = useFrogModal({ closeOnOverlayClick: false }); // Disables closing modal by clicking on the overlay
+const { setModal } = useFrogModal();
+
+// Opening a simple modal window
+setModal(SimpleModal, {
+  title: "Title",
+  content: "Content",
+});
 ```
 
-### closeOnEsc
-
-Enables/disables closing the modal by press Esc button
-
-Type: boolean
-
-Default: true
+### Usage with Events
 
 ```typescript
-const { setModal } = useFrogModal({ closeOnEsc: false }); // Disables closing modal by pressing Esc button
+const { setModal } = useFrogModal();
+
+setModal(FormModal, {
+  onSubmit: (data) => {
+    console.log(data);
+  },
+});
 ```
+
+## License
+
+MIT
 
 <!-- Badges -->
 

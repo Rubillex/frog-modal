@@ -1,0 +1,221 @@
+.frog-modal-wrapper.desktop-full {
+  width: 100%;
+  height: 100%;
+
+  transform: translateY(25%);
+  opacity: 0;
+  transition: transform var(--frog-modal-animation-duration, 0.3s)
+      var(--frog-modal-animation-timing, ease-in-out),
+    opacity var(--frog-modal-animation-duration, 0.3s)
+      var(--frog-modal-animation-timing, ease-in-out);
+
+  &.shown {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.frog-modal-wrapper.desktop-center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  transition: transform var(--frog-modal-animation-duration, 0.3s)
+      var(--frog-modal-animation-timing, ease-in-out),
+    opacity var(--frog-modal-animation-duration, 0.3s)
+      var(--frog-modal-animation-timing, ease-in-out);
+
+  &.shown {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+.frog-modal-wrapper.desktop-top {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-25%);
+  opacity: 0;
+  transition: transform var(--frog-modal-animation-duration, 0.3s)
+      var(--frog-modal-animation-timing, ease-in-out),
+    opacity var(--frog-modal-animation-duration, 0.3s)
+      var(--frog-modal-animation-timing, ease-in-out);
+
+  &.shown {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+.frog-modal-wrapper.desktop-bottom {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  opacity: 0;
+  transition: transform var(--frog-modal-animation-duration, 0.3s)
+      var(--frog-modal-animation-timing, ease-in-out),
+    opacity var(--frog-modal-animation-duration, 0.3s)
+      var(--frog-modal-animation-timing, ease-in-out);
+
+  &.shown {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+.frog-modal-wrapper.desktop-left {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) translateX(-25%);
+  opacity: 0;
+  transition: transform var(--frog-modal-animation-duration, 0.3s)
+      var(--frog-modal-animation-timing, ease-in-out),
+    opacity var(--frog-modal-animation-duration, 0.3s)
+      var(--frog-modal-animation-timing, ease-in-out);
+
+  &.shown {
+    transform: translateX(0) translateY(-50%);
+    opacity: 1;
+  }
+}
+
+.frog-modal-wrapper.desktop-right {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) translateX(25%);
+  opacity: 0;
+  transition: transform var(--frog-modal-animation-duration, 0.3s)
+      var(--frog-modal-animation-timing, ease-in-out),
+    opacity var(--frog-modal-animation-duration, 0.3s)
+      var(--frog-modal-animation-timing, ease-in-out);
+
+  &.shown {
+    transform: translateX(0) translateY(-50%);
+    opacity: 1;
+  }
+}
+
+.frog-modal-wrapper__header {
+  position: relative;
+  width: 100%;
+  height: 32px;
+}
+
+.frog-modal-wrapper__header-close {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 4px;
+  background-color: #000;
+  border-radius: 4px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .frog-modal-wrapper.mobile-full {
+    width: 100%;
+    height: 100%;
+    transform: translateY(25%);
+    opacity: 0;
+    transition: transform var(--frog-modal-animation-duration, 0.3s)
+        var(--frog-modal-animation-timing, ease-in-out),
+      opacity var(--frog-modal-animation-duration, 0.3s)
+        var(--frog-modal-animation-timing, ease-in-out);
+
+    &.shown {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .frog-modal-wrapper.mobile-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+    transition: transform var(--frog-modal-animation-duration, 0.3s)
+        var(--frog-modal-animation-timing, ease-in-out),
+      opacity var(--frog-modal-animation-duration, 0.3s)
+        var(--frog-modal-animation-timing, ease-in-out);
+
+    &.shown {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+
+  .frog-modal-wrapper.mobile-top {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(-25%);
+    opacity: 0;
+    transition: transform var(--frog-modal-animation-duration, 0.3s)
+        var(--frog-modal-animation-timing, ease-in-out),
+      opacity var(--frog-modal-animation-duration, 0.3s)
+        var(--frog-modal-animation-timing, ease-in-out);
+
+    &.shown {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .frog-modal-wrapper.mobile-bottom {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(100%);
+    opacity: 0;
+    transition: transform var(--frog-modal-animation-duration, 0.3s)
+        var(--frog-modal-animation-timing, ease-in-out),
+      opacity var(--frog-modal-animation-duration, 0.3s)
+        var(--frog-modal-animation-timing, ease-in-out);
+
+    &.shown {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .frog-modal-wrapper.mobile-left {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) translateX(-25%);
+    opacity: 0;
+    transition: transform var(--frog-modal-animation-duration, 0.3s)
+        var(--frog-modal-animation-timing, ease-in-out),
+      opacity var(--frog-modal-animation-duration, 0.3s)
+        var(--frog-modal-animation-timing, ease-in-out);
+
+    &.shown {
+      transform: translateX(0) translateY(-50%);
+      opacity: 1;
+    }
+  }
+
+  .frog-modal-wrapper.mobile-right {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) translateX(25%);
+    opacity: 0;
+    transition: transform var(--frog-modal-animation-duration, 0.3s)
+        var(--frog-modal-animation-timing, ease-in-out),
+      opacity var(--frog-modal-animation-duration, 0.3s)
+        var(--frog-modal-animation-timing, ease-in-out);
+
+    &.shown {
+      transform: translateX(0) translateY(-50%);
+      opacity: 1;
+    }
+  }
+}
+
+.frog-modal-wrapper {
+  position: absolute;
+  z-index: 1;
+
+  &.is-swiping {
+    transition: none;
+  }
+}

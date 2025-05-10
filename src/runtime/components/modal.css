@@ -30,13 +30,13 @@
   height: 100%;
   width: 100%;
 
-  opacity: var(--frog-modal-overlay-opacity);
+  opacity: 0;
   background: var(--frog-modal-overlay-background);
-}
+  transition: var(--frog-modal-transition);
 
-.frog-modal__content {
-  position: relative;
-  z-index: 1;
+  &.shown {
+    opacity: var(--frog-modal-overlay-opacity);
+  }
 }
 
 .frog-modal__entity {
@@ -45,8 +45,4 @@
   left: 0;
   height: 100%;
   width: 100%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }

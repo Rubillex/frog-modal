@@ -1,6 +1,6 @@
-import { DefineComponent } from "vue";
+import type { DefineComponent } from "vue";
 import { markRaw, ref, useState, watch } from "#imports";
-import { IFrogModalConfig, modal } from "../types";
+import type { IFrogModalConfig, modal } from "../types";
 
 const baseConfig = {
   closeOnOverlayClick: true,
@@ -15,34 +15,44 @@ export type EmitsToOn<T> = {
 };
 
 export function useFrogModal(config?: IFrogModalConfig) {
-  const modal = useState<modal[]>("frog-modals", () => []);
+  const modals = useState<modal[]>("frog-modals", () => []);
   const isOpen = ref<boolean>(false);
 
   function setModal<Props = {}, Emits extends Record<string, any[]> = {}>(
     comp: DefineComponent | {},
     opts?: Props & EmitsToOn<Emits>
   ) {
-    modal.value?.push({
+    modals.value?.push({
+      key: Date.now(),
       component: markRaw(comp),
       options: opts ?? {},
       config: { ...baseConfig, ...config },
+      isShown: false,
     });
+
+    setTimeout(() => {
+      modals.value[modals.value.length - 1].isShown = true;
+    }, config?.fadeInDelay ?? 0);
   }
 
   function closeModal() {
-    modal.value.pop();
+    modals.value[modals.value.length - 1].isShown = false;
+
+    setTimeout(() => {
+      modals.value.pop();
+    }, config?.fadeOutDelay ?? 300);
   }
 
   function clearModals() {
-    modal.value = [];
+    modals.value = [];
   }
 
   watch(
-    () => modal.value.length,
+    () => modals.value.length,
     () => {
-      isOpen.value = !!modal.value.length;
+      isOpen.value = !!modals.value.length;
     }
   );
 
-  return { setModal, closeModal, clearModals, isOpen };
+  return { setModal, closeModal, clearModals, isOpen, modals };
 }
