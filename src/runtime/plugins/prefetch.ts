@@ -20,7 +20,9 @@ export default defineNuxtPlugin((nuxtApp) => {
       localLoader = loader;
 
       if (typeof loader !== "function") {
-        console.warn("[v-prefetch] Expected loader to be a function.");
+        console.warn(
+          "[v-frog-modal-prefetch] Expected loader to be a function."
+        );
         return;
       }
 
