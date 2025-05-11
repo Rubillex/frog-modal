@@ -23,13 +23,10 @@
 
 <script setup lang="ts">
 import "./modal.css";
-import { onMounted, onUnmounted, useState } from "#imports";
+import { onMounted, onUnmounted } from "#imports";
 import { useFrogModal } from "../composables/useFrogModal";
-import type { modal } from "../types";
 
-const modals = useState<modal[]>("frog-modals", () => []);
-
-const { closeModal } = useFrogModal();
+const { closeModal, modals } = useFrogModal();
 
 const onKeyDown = (e: KeyboardEvent) => {
   if (e.keyCode === 27 && modals.value[0]?.config.closeOnEsc) closeModal();
