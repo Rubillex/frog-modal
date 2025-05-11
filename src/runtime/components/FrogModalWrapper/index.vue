@@ -27,6 +27,7 @@
       @touchstart="handleTouchStart"
       @touchmove="handleTouchMove"
       @touchend="handleTouchEnd"
+      :class="headerWrapperClass"
     >
       <slot name="header">
         <div class="frog-modal-wrapper__header">
@@ -51,6 +52,7 @@ const {
   desktopPosition = FrogModalWrapperPosition.CENTER,
   mobilePosition = FrogModalWrapperPosition.CENTER,
   mobileSwipeToClose = false,
+  headerWrapperClass = undefined,
 } = defineProps<FrogModalWrapperProps>();
 
 const { closeModal, modals } = useFrogModal();

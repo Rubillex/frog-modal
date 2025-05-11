@@ -11,4 +11,5 @@ export type FrogModalWrapperProps = {
   desktopPosition?: FrogModalWrapperPosition;
   mobilePosition?: FrogModalWrapperPosition;
   mobileSwipeToClose?: boolean;
+  headerWrapperClass?: string;
 };

@@ -90,8 +90,8 @@ Your custom modal component should be wrapped with `FrogModalWrapper` component.
 ```vue
 <template>
   <FrogModalWrapper
-    desktop-position="center"
-    mobile-position="bottom"
+    :desktop-position="FrogModalWrapperPosition.CENTER"
+    :mobile-position="FrogModalWrapperPosition.BOTTOM"
     mobile-swipe-to-close
     class="modal"
   >
@@ -135,11 +135,12 @@ const { setModal } = useFrogModal();
 
 ### FrogModalWrapper Props
 
-| Prop               | Type                     | Default | Description                                               |
-| ------------------ | ------------------------ | ------- | --------------------------------------------------------- |
-| desktopPosition    | FrogModalWrapperPosition | .CENTER | Modal position on desktop (see available positions below) |
-| mobilePosition     | FrogModalWrapperPosition | .CENTER | Modal position on mobile (see available positions below)  |
-| mobileSwipeToClose | boolean                  | false   | Enable swipe-to-close on mobile devices                   |
+| Prop               | Type                     | Default   | Description                                                                                                                              |
+| ------------------ | ------------------------ | --------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| desktopPosition    | FrogModalWrapperPosition | .CENTER   | Modal position on desktop (see available positions below)                                                                                |
+| mobilePosition     | FrogModalWrapperPosition | .CENTER   | Modal position on mobile (see available positions below)                                                                                 |
+| mobileSwipeToClose | boolean                  | false     | Enable swipe-to-close on mobile devices                                                                                                  |
+| headerWrapperClass | string                   | undefined | Allows you to add a custom CSS class to the modal window title wrapper (usually used to stylize the area to swipe on mobileSwipeToClose) |
 
 ### Available Modal Positions
 
@@ -200,7 +201,7 @@ Note: The actual animation duration and timing function are controlled by CSS va
 
 #### Header Slot
 
-The `header` slot is specifically designed for mobile devices when using `mobileSwipeToClose`. It provides a draggable area at the top of the modal that users can swipe down to close the modal. This is particularly useful for bottom-positioned modals on mobile devices.
+The `header` slot is specifically designed for mobile devices when using `mobileSwipeToClose`. It provides a draggable area at the top of the modal that users can swipe down to close the modal. This feature is mainly used with the bottom position on mobile.
 
 #### Mobile Swipe to Close
 
