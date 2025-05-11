@@ -30,7 +30,7 @@ export default defineNuxtModule<ModuleOptions>({
     const runtimeDir = fileURLToPath(new URL("./runtime", import.meta.url));
     nuxt.options.build.transpile.push(runtimeDir);
 
-    addPlugin(resolver.resolve("runtime/plugins/prefetch.ts"));
+    addPlugin(resolver.resolve("runtime/plugins/prefetch.js"));
 
     addComponent({
       name: options.componentName,
