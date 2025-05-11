@@ -29,6 +29,7 @@ A module for simplifying modal window management in Nuxt.js applications.
 - [Styling](#styling)
 - [TypeScript](#typescript)
 - [API](#api)
+- [Prefetching Asynchronous Modal Windows](#prefetching-asynchronous-modal-windows)
 - [Examples](#examples)
 - [License](#license)
 
@@ -390,6 +391,65 @@ setModal<YourModalProps, YourModalEmits>(YourModal, {
 | closeModal  | Closes the last opened modal window |
 | clearModals | Closes all open modal windows       |
 | isOpen      | Modal window state (boolean)        |
+
+## Prefetching Asynchronous Modal Windows
+
+### Directive `v-frog-modal-prefetch`
+
+A custom directive `v-frog-modal-prefetch` has been added, allowing you to prefetch asynchronous modal components either on hover or when the element becomes visible in the viewport.
+
+**Usage:**
+
+```vue
+<button v-frog-modal-prefetch.visible="testModalLoader" @click="openModal()">
+  Open modal
+</button>
+```
+
+- `binding` — a function that returns a promise with the async component (for example, the result of an import).
+- `.visible` — a modifier that triggers prefetching when the element appears in the viewport (using IntersectionObserver).
+- If no modifier is specified, prefetching will be triggered on hover (`mouseenter`) by default.
+
+**Examples:**
+
+- Prefetch on hover:
+
+  ```vue
+  <button v-frog-modal-prefetch="testModalLoader" @click="openModal()">
+    Open modal
+  </button>
+  ```
+
+- Prefetch when visible:
+
+  ```vue
+  <button v-frog-modal-prefetch.visible="testModalLoader" @click="openModal()">
+    Open modal
+  </button>
+  ```
+
+### Hook `useAsyncComponentWrapper`
+
+For convenient work with asynchronous components, use the hook:
+
+```ts
+const { component: TestModal, loader: testModalLoader } =
+  useAsyncComponentWrapper(() => import("~/components/TestModal/index.vue"));
+```
+
+- `component` — the async component to be passed to the modal.
+- `loader` — the prefetch function (used in the directive).
+
+### Opening a Modal Window
+
+To open a modal window, use the `setModal` function from the `useFrogModal` hook:
+
+```ts
+setModal<TestModalProps, TestModalEmits>(TestModal, {
+  text: "test",
+  onCustomEmit: handleClick,
+});
+```
 
 ## Examples
 

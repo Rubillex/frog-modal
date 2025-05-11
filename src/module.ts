@@ -3,6 +3,7 @@ import {
   createResolver,
   addComponent,
   addImports,
+  addPlugin,
 } from "@nuxt/kit";
 import { fileURLToPath } from "node:url";
 
@@ -29,6 +30,8 @@ export default defineNuxtModule<ModuleOptions>({
     const runtimeDir = fileURLToPath(new URL("./runtime", import.meta.url));
     nuxt.options.build.transpile.push(runtimeDir);
 
+    addPlugin(resolver.resolve("runtime/plugins/prefetch.ts"));
+
     addComponent({
       name: options.componentName,
       export: "default",
@@ -47,6 +50,12 @@ export default defineNuxtModule<ModuleOptions>({
       name: options.composableName,
       as: options.composableName,
       from: resolver.resolve("runtime/composables/useFrogModal"),
+    });
+
+    addImports({
+      name: "useAsyncComponentWrapper",
+      as: "useAsyncComponentWrapper",
+      from: resolver.resolve("runtime/composables/useAsyncComponentWrapper"),
     });
 
     addImports({
