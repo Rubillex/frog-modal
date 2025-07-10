@@ -16,7 +16,7 @@ export type EmitsToOn<T> = {
 
 export function useFrogModal(config?: IFrogModalConfig) {
   const modals = useState<modal[]>("frog-modals", () => []);
-  const isOpen = ref<boolean>(false);
+  const isOpen = useState<boolean>("frog-modal-is-open", () => false);
 
   function setModal<Props = {}, Emits extends Record<string, any[]> = {}>(
     comp: DefineComponent | {},

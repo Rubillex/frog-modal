@@ -212,7 +212,7 @@
 }
 
 .frog-modal-wrapper {
-  position: absolute;
+  position: fixed;
   z-index: 1;
 
   &.is-swiping {
