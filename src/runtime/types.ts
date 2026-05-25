@@ -8,7 +8,7 @@ export interface IFrogModalConfig {
 }
 
 export interface modal {
-  key: number;
+  key: number | string;
   component: DefineComponent | {};
   options: any;
   config: IFrogModalConfig;

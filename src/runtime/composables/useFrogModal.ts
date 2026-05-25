@@ -1,8 +1,10 @@
 import type { DefineComponent } from "vue";
-import { markRaw, ref, useState, watch } from "#imports";
+import { markRaw, useState, watch } from "#imports";
 import type { IFrogModalConfig, modal } from "../types";
 
-const baseConfig = {
+const BASE_CONFIG: Required<
+  Pick<IFrogModalConfig, "closeOnOverlayClick" | "closeOnEsc">
+> = {
   closeOnOverlayClick: true,
   closeOnEsc: true,
 };
@@ -18,29 +20,55 @@ export function useFrogModal(config?: IFrogModalConfig) {
   const modals = useState<modal[]>("frog-modals", () => []);
   const isOpen = useState<boolean>("frog-modal-is-open", () => false);
 
+  const mergedConfig = {
+    ...BASE_CONFIG,
+    ...config,
+  };
+
+  function isModalOpen(key: string | number): boolean {
+    return modals.value.some((modal) => modal.key === key && modal.isShown);
+  }
+
   function setModal<Props = {}, Emits extends Record<string, any[]> = {}>(
     comp: DefineComponent | {},
-    opts?: Props & EmitsToOn<Emits>
-  ) {
+    opts?: Props & EmitsToOn<Emits> & { key?: string | number },
+  ): string | number {
+    const { key: customKey, ...restOpts } = (opts ?? {}) as {
+      key?: string | number;
+    } & Record<string, any>;
+    const key: string | number = customKey ?? Date.now();
+
     modals.value?.push({
-      key: Date.now(),
+      key,
       component: markRaw(comp),
-      options: opts ?? {},
-      config: { ...baseConfig, ...config },
+      options: restOpts,
+      config: mergedConfig,
       isShown: false,
     });
 
     setTimeout(() => {
       modals.value[modals.value.length - 1].isShown = true;
     }, config?.fadeInDelay ?? 0);
+
+    return key;
   }
 
-  function closeModal() {
-    modals.value[modals.value.length - 1].isShown = false;
-
+  function removeModal(key: string | number, delay = 0) {
     setTimeout(() => {
-      modals.value.pop();
-    }, config?.fadeOutDelay ?? 300);
+      modals.value = modals.value.filter((modal) => modal.key !== key);
+    }, delay);
+  }
+
+  function closeModal(key?: string | number) {
+    const target =
+      key === undefined
+        ? modals.value[modals.value.length - 1]
+        : modals.value.find((m) => m.key === key);
+
+    if (!target || !target.isShown) return;
+
+    target.isShown = false;
+    removeModal(target.key, target.config.fadeOutDelay ?? 300);
   }
 
   function clearModals() {
@@ -51,8 +79,8 @@ export function useFrogModal(config?: IFrogModalConfig) {
     () => modals.value.length,
     () => {
       isOpen.value = !!modals.value.length;
-    }
+    },
   );
 
-  return { setModal, closeModal, clearModals, isOpen, modals };
+  return { setModal, closeModal, clearModals, isModalOpen, isOpen, modals };
 }
