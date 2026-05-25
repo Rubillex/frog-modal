@@ -70,15 +70,27 @@ export default defineNuxtConfig({
 ## Usage
 
 ```typescript
-const { setModal, closeModal, clearModals, isOpen } = useFrogModal();
+const { setModal, closeModal, clearModals, isOpen, isModalOpen } = useFrogModal();
 
 // Opening a modal window
 setModal(YourModalComponent, {
   // props
 });
 
+// Opening a modal window with a custom key
+setModal(YourModalComponent, {
+  key: 'my-modal',
+  // props
+});
+
 // Closing the last opened modal window
 closeModal();
+
+// Closing a specific modal window by key
+closeModal('my-modal');
+
+// Checking if a specific modal is open
+isModalOpen('my-modal'); // true | false
 
 // Closing all modal windows
 clearModals();
@@ -347,19 +359,37 @@ const { setModal } = useFrogModal();
 
 ### Opening Typed Modals
 
-When opening a modal, TypeScript will provide type checking for both props and emits:
+When opening a modal, TypeScript will provide type checking for both props and emits. `setModal` returns the modal key:
 
 ```typescript
-const { setModal } = useFrogModal();
+const { setModal, closeModal, isModalOpen } = useFrogModal();
 
 // TypeScript will ensure all required props are provided
-setModal<YourModalProps, YourModalEmits>(YourModal, {
+const key = setModal<YourModalProps, YourModalEmits>(YourModal, {
   text: "Hello!", // Required prop
   onCustomEmit: (message: string) => {
     // TypeScript knows the exact type of the message parameter
     console.log(message);
   },
 });
+
+// Check if this modal is still open
+isModalOpen(key); // true | false
+
+// Close this specific modal
+closeModal(key);
+```
+
+You can also provide a custom string key instead of using the auto-generated one:
+
+```typescript
+setModal<YourModalProps, YourModalEmits>(YourModal, {
+  key: 'confirm-dialog',
+  text: "Hello!",
+});
+
+isModalOpen('confirm-dialog'); // true | false
+closeModal('confirm-dialog');
 ```
 
 ### Type Safety Features
@@ -385,12 +415,21 @@ setModal<YourModalProps, YourModalEmits>(YourModal, {
 
 #### Methods
 
-| Method      | Description                         |
-| ----------- | ----------------------------------- |
-| setModal    | Opens a modal window                |
-| closeModal  | Closes the last opened modal window |
-| clearModals | Closes all open modal windows       |
-| isOpen      | Modal window state (boolean)        |
+| Method       | Parameters              | Returns         | Description                                                        |
+| ------------ | ----------------------- | --------------- | ------------------------------------------------------------------ |
+| setModal     | `comp, opts?`           | `string\|number` | Opens a modal window, returns the modal key                       |
+| closeModal   | `key?`                  | `void`          | Closes the last opened modal if no key given, otherwise closes by key |
+| clearModals  | —                       | `void`          | Closes all open modal windows                                      |
+| isModalOpen  | `key: string\|number`   | `boolean`       | Returns whether a specific modal is currently open                 |
+| isOpen       | —                       | `Ref<boolean>`  | Reactive flag, true if any modal is open                           |
+
+#### setModal options
+
+In addition to the component's own props and emits handlers, `opts` accepts an optional `key` field:
+
+| Field | Type              | Default      | Description                                                    |
+| ----- | ----------------- | ------------ | -------------------------------------------------------------- |
+| key   | `string\|number`  | `Date.now()` | Custom identifier for the modal. Auto-generated if not provided |
 
 ## Prefetching Asynchronous Modal Windows
 
@@ -442,13 +481,31 @@ const { component: TestModal, loader: testModalLoader } =
 
 ### Opening a Modal Window
 
-To open a modal window, use the `setModal` function from the `useFrogModal` hook:
+To open a modal window, use the `setModal` function from the `useFrogModal` hook. It returns the modal's key, which can be used later to close or check the state of that specific modal:
 
 ```ts
-setModal<TestModalProps, TestModalEmits>(TestModal, {
+const key = setModal<TestModalProps, TestModalEmits>(TestModal, {
   text: "test",
   onCustomEmit: handleClick,
 });
+
+// Check if this specific modal is still open
+isModalOpen(key); // true | false
+
+// Close this specific modal
+closeModal(key);
+```
+
+You can also assign a custom key:
+
+```ts
+setModal<TestModalProps, TestModalEmits>(TestModal, {
+  key: 'confirm-dialog',
+  text: "test",
+  onCustomEmit: handleClick,
+});
+
+closeModal('confirm-dialog');
 ```
 
 ## Examples
@@ -475,6 +532,33 @@ setModal(FormModal, {
     console.log(data);
   },
 });
+```
+
+### Named Modals and Targeted Close
+
+```typescript
+const { setModal, closeModal, isModalOpen } = useFrogModal();
+
+// Open two modals simultaneously
+setModal(SidebarModal, { key: 'sidebar' });
+setModal(ConfirmModal, { key: 'confirm', message: 'Are you sure?' });
+
+// Close only the confirm modal, sidebar stays open
+closeModal('confirm');
+
+isModalOpen('sidebar'); // true
+isModalOpen('confirm'); // false
+```
+
+### Using the Returned Key
+
+```typescript
+const { setModal, closeModal, isModalOpen } = useFrogModal();
+
+const key = setModal(NotificationModal, { text: 'Saved!' });
+
+// Close it programmatically after 3 seconds
+setTimeout(() => closeModal(key), 3000);
 ```
 
 ## License
